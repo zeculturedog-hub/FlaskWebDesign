@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}ExpenseFlow{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Small Flask expense tracker</p>
+        <h1>Track spending without making the app bigger than the problem.</h1>
+        <p class="hero-copy">
+            Create an account, add expenses, and use the admin dashboard to see
+            all users and totals across the system.
+        </p>
+        <div class="actions">
+            <a class="button primary" href="{{ url_for('register') }}">Create account</a>
+            <a class="button secondary" href="{{ url_for('login') }}">Log in</a>
+        </div>
+    </div>
+    <div class="summary-panel">
+        <span class="panel-label">Starter features</span>
+        <ul>
+            <li>User registration and login</li>
+            <li>Personal expense dashboard</li>
+            <li>Admin-only overview</li>
+            <li>SQLite storage</li>
+        </ul>
+    </div>
+</section>
+{% endblock %}

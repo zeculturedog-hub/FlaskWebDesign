@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ExpenseFlow{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">User dashboard</p>
+    <h1>Hello, {{ g.user["name"] }}.</h1>
+    <p>Your current tracked total is <strong>${{ "%.2f"|format(total) }}</strong>.</p>
+</section>
+
+<section class="dashboard-grid">
+    <form class="form-card" method="post" action="{{ url_for('add_expense') }}">
+        <h2>Add expense</h2>
+
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" placeholder="Lunch, bus fare, hosting..." required>
+
+        <label for="category">Category</label>
+        <input id="category" name="category" type="text" placeholder="Food, travel, bills..." required>
+
+        <label for="amount">Amount</label>
+        <input id="amount" name="amount" type="number" min="0" step="0.01" required>
+
+        <label for="spent_on">Date</label>
+        <input id="spent_on" name="spent_on" type="date" required>
+
+        <label for="note">Note</label>
+        <textarea id="note" name="note" rows="3"></textarea>
+
+        <button class="button primary full" type="submit">Add expense</button>
+    </form>
+
+    <div class="table-panel">
+        <div class="panel-heading">
+            <h2>Your expenses</h2>
+            <span>{{ expenses|length }} records</span>
+        </div>
+
+        {% if expenses %}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            <tr>
+                                <td>{{ expense["spent_on"] }}</td>
+                                <td>{{ expense["title"] }}</td>
+                                <td>{{ expense["category"] }}</td>
+                                <td>${{ "%.2f"|format(expense["amount"]) }}</td>
+                                <td>
+                                    <form method="post" action="{{ url_for('delete_expense', expense_id=expense['id']) }}">
+                                        <button class="text-button" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty">No expenses yet. Add your first one on the left.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

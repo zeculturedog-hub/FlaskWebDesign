@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Admin - ExpenseFlow{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">Admin dashboard</p>
+    <h1>System overview</h1>
+    <p>Total tracked across all users: <strong>${{ "%.2f"|format(total) }}</strong>.</p>
+</section>
+
+<section class="admin-grid">
+    <div class="table-panel">
+        <div class="panel-heading">
+            <h2>Users</h2>
+            <span>{{ users|length }} accounts</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Expenses</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user["name"] }}</td>
+                            <td>{{ user["email"] }}</td>
+                            <td>{{ user["role"] }}</td>
+                            <td>{{ user["expense_count"] }}</td>
+                            <td>${{ "%.2f"|format(user["total_spent"]) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="table-panel">
+        <div class="panel-heading">
+            <h2>All expenses</h2>
+            <span>{{ expenses|length }} records</span>
+        </div>
+        {% if expenses %}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            <tr>
+                                <td>{{ expense["user_name"] }}</td>
+                                <td>{{ expense["spent_on"] }}</td>
+                                <td>{{ expense["title"] }}</td>
+                                <td>{{ expense["category"] }}</td>
+                                <td>${{ "%.2f"|format(expense["amount"]) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty">No expenses have been added yet.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

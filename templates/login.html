@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Login - ExpenseFlow{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+    <div>
+        <p class="eyebrow">Welcome back</p>
+        <h1>Log in to manage your expenses.</h1>
+        <p>The first registered account becomes the admin account.</p>
+    </div>
+
+    <form class="form-card" method="post">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+        <button class="button primary full" type="submit">Log in</button>
+        <p class="form-link">No account yet? <a href="{{ url_for('register') }}">Register</a></p>
+    </form>
+</section>
+{% endblock %}
